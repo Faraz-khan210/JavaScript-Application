@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css" />
+    <title>User Page</title>
+  </head>
+  <body>
+    <!-- <h1>Hey! I am user</h1> -->
+    <nav>
+      <div class="nav-container">
+        <div class="logo-container">
+          <img src="./assets/Kfc_logo_PNG9.png" alt="KFC" class="logo" />
+        </div>
+        <div>
+          <img src="./assets/name.png" alt="KFC" class="logoName" />
+        </div>
+        <div class="admin-btns">
+          <div id="userPopUp">
+            <div>
+            <img
+              src="./assets/user.png"
+              alt="User"
+              width="30px"
+              height="30px"
+              class="user"
+            />
+          </div>
+          <div class="a">
+            <span id="userName">User</span>
+          </div>
+          </div>
+
+          <button class="admin-btn newBranch" onclick="cartPage()">Cart</button>
+          <button class="admin-btn backToHome" onclick="homePage()">
+            Logout
+          </button>
+        </div>
+      </div>
+    </nav>
+    <div class="branchContainer" id="branchContainer"></div>
+
+    <div class="container" id="container">
+      <div class="closeCard">
+        <button class="danger c" onclick="closeCard()">Close</button>
+      </div>
+      <div class="itemContainer" id="itemContainer"></div>
+    </div>
+
+    <div class="userPopupContainer" id="userPopupContainer">
+
+    </div>
+    <!-- style="width:100%;height: 100%;position: absolute;top: 0px;
+    display: flex;background-color: rgba(4, 5, 5, 0.79);justify-content: space-around;visibility:hidden;" -->
+    <div class="hey" id="hey">
+      <div class="contain">
+        <div class="head">
+          <div class="">
+            <img src="./assets/Kfc_logo_PNG9.png" alt="Logo" class="logo" />
+          </div>
+          <div style="margin-top: 30px">
+            <h1>Cart</h1>
+          </div>
+          <div
+            style="margin-top: 30px; margin-right: 150px"
+            id="TotalBill"
+          >Total Amount: 0</div>
+          <!-- <p id="TotalBill" style="color: white;font-size: 15px;font-family: Arial, Helvetica, sans-serif;letter-spacing: 3px;position: relative;left: 140px;width: fit-content;height: fit-content;position: relative;top:25px;padding: 0px;"></p> -->
+        </div>
+        <div class="cartContainer" id="cartContainer"></div>
+        <div class="cart-btn">
+          <div>
+            <button class="buy-btn" id="buy-btn" onclick="itembuying()">Buy now</button>
+            <button class="cBtn" onclick="closeCart()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    
+    <script>
+      function anonymous(){
+        var user=localStorage.getItem("UserLogName")
+
+        const cartedList = JSON.parse(localStorage.getItem(`${user}cartedItems`))
+          ? JSON.parse(localStorage.getItem(`${user}cartedItems`))
+          : [];
+
+        // console.log(cartedList);
+        
+        if(cartedList.length==0){
+          // document.getElementById("buy-btn").setAttribute('disabled','disabled')
+          localStorage.removeItem(`${user}BranchCart`)
+        }
+      }
+      anonymous()
+
+
+
+
+
+
+
+
+      var userName = localStorage.getItem("UserLogName");
+
+      var cartBranch=new Array()
+      
+
+      document.getElementById("userName").innerHTML = userName.toUpperCase();
+
+      // localStorage.setItem("faraz","")
+      function user(){
+        var userName=localStorage.getItem("UserLogName")
+        var userEmail=localStorage.getItem("UserLogEmail")
+        var userNumber=localStorage.getItem("UserLogPhone")
+        // console.log(userName,userEmail,userNumber);
+        var popUp=document.getElementById("userPopupContainer")
+        // console.log(popUp);
+        var container=`
+        <div>
+          <div class='popbtn' onclick="userClose()"><button class="pop dange">close</button></div>
+          <div class='userContainer'>
+            <div class="left">
+                <p>Name :- ${userName.toUpperCase()} </p>
+                <p>Email :- ${userEmail} </p>
+                <p> Number :- ${userNumber} </p>
+            </div>
+            <div class="right">
+              <img src="./assets/user1.png" alt="User" class="userimg">
+            </div>
+          </div>
+        </div>  
+        `
+
+        popUp.innerHTML+=container
+        // console.log(popUp);
+      }
+      user()
+
+      document.getElementById("userPopUp").addEventListener('click',function(){
+        // alert("clicked")
+
+        document.getElementById("userPopupContainer").style.display="block"
+       
+      })
+      function userClose(){
+        document.getElementById("userPopupContainer").style.display="none"
+
+      }
+
+  
+      /************* Logout Button***********************/
+      function homePage() {
+        // localStorage.removeItem("cartedItems")
+        // localStorage.removeItem("OldLogName")
+        document.write("<a href='./index.html'></a>");
+        window.location.href = "./index.html";
+      }
+
+      const displayCards = () => {
+        const branchList = JSON.parse(localStorage.getItem("BranchDetails"))
+          ? JSON.parse(localStorage.getItem("BranchDetails"))
+          : [];
+        // console.log(branchList);
+        var cardContainer = document.getElementById("branchContainer");
+
+        // console.log(branchList);
+        branchList.forEach((branch, index) => {
+          const cardContent = `
+
+          <div style="width:240px;height:350px;border:0.5px red white;margin-bottom:25px;box-shadow: 0px 0px 2px 2px black;border-radius: 8px;background-color:rgb(0,0,0,0.8)" >
+          
+          <img src=${branch.image} width='100%' height='180px' style="border-radius: 8px 8px 0px 0px"/>
+
+                <div style="margin:15px 0px;pading:0px;">
+                  <p class="cardText">Branch ID :${branch.code}</p>
+                  
+                  <h5 style="margin:5px;pading:0px;font-size: 18px;color: white;font-weight:bold"> Branch : ${branch.name} </h5>
+                  <p style="margin:5px;font-size: 18px ;color: white;" >Location : ${branch.address} </p>
+                  <div class="h" style=" padding-bottom: 10px;">
+                    <button class="view" onclick="viewPage(${index})">View</button> 
+                  </div>  
+                  
+              </div>
+            
+          </div>`;
+          //   console.log(cardContainer);
+          cardContainer.innerHTML += cardContent;
+        });
+      };
+      displayCards();
+
+      // ************** cartPage**************
+
+
+
+      
+      /********************Calculating Total Amount**************************/
+      // debugger  
+      function totalAmt() {
+        // debugger
+        var user=localStorage.getItem("UserLogName")
+
+        const cartList = JSON.parse(localStorage.getItem(`${user}cartedItems`))
+          ? JSON.parse(localStorage.getItem(`${user}cartedItems`))
+          : [];
+        // console.log(cartList);
+        var bill=localStorage.getItem(`${user}TotalBill`)
+
+        // console.log(bill);
+       
+        var total = 0;
+        // debugger
+        // console.log(this.TotalBill);
+        localStorage.setItem(`${user}TotalBill`,total)
+        cartList.forEach((item) => {
+          var qty=localStorage.getItem(`${user}${item.itemCode}Qty`)?localStorage.getItem(`${user}${item.itemCode}Qty`):1
+          // console.log(qty);
+          
+          total = (parseInt(total) + (parseInt(item.itemPrice)*qty));
+          console.log(total);
+
+          document.getElementById("TotalBill").innerHTML =
+            "Total Amount :" + total;
+          this.TotalBill = total;
+          localStorage.setItem(`${user}TotalBill`,total)
+          // console.log(this.TotalBill);
+          // console.log(total);
+
+        });
+      }
+      totalAmt();
+
+
+
+      function viewPage(index) {
+        // console.log(index);
+      
+        var user=localStorage.getItem("UserLogName")
+       
+        var branchList=JSON.parse(localStorage.getItem("BranchDetails"))
+          ? JSON.parse(localStorage.getItem("BranchDetails"))
+          : [];
+
+        var branch=JSON.parse(localStorage.getItem(`${user}BranchCart`))?
+        JSON.parse(localStorage.getItem(`${user}BranchCart`)):[]
+        
+          // console.log( branchList[index].name,index)
+          // var abc=`${branchList[index].name}`
+          // console.log(abc);
+            // var branch=`${branchList[index].name}`
+
+
+        //     branch.push({
+        //   "bname":`${branchList[index].name}`
+        // })
+        
+
+            localStorage.setItem(`${user}BranchCart`,JSON.stringify(branch))
+          // if(branch==branchList[index].name){
+          //   // alert("matched")
+          //   document.getElementById("container").style.display = "block";
+          //   itemDisplay(index)
+          // }
+          // else{
+          //   alert(`You have already select items from ${branch} branch can't access other branch`)
+          // }
+
+          
+          document.getElementById("container").style.display = "block";
+          itemDisplay(index)
+          
+
+
+          // localStorage.setItem("branch",branch)
+          // itemDisplay(index)
+      }
+
+
+
+
+
+
+
+      const itemDisplay = (index) => {
+        
+
+        BranchData=JSON.parse(localStorage.getItem("BranchDetails"))?JSON.parse(localStorage.getItem("BranchDetails")):[]
+
+        // console.log(BranchData.name);
+        const itemList = JSON.parse(localStorage.getItem(`${BranchData[index].name}`))? 
+        JSON.parse(localStorage.getItem(`${BranchData[index].name}`)): [];
+            // console.log(itemList.length);
+
+            var itemCard= document.getElementById("itemContainer")
+            
+            // localStorage.setItem("branch",BranchData[index].name)
+            // console.log(itemCard);
+            // console.log(itemList);
+            // debugger  
+            // console.log(BranchData[index].name);
+            
+              var name=BranchData[index].name
+              // console.log(name);
+              itemList.forEach((item,ind)=>{
+                // console.log();
+             const itemContainer=
+                `
+                <div class="itemContain">
+
+                    <img src=${item.itemImage} width="100%" height="150px"/>
+                    <div class="innerBox">
+                        <p class="itemText">Item Code:${item.itemCode}</p>
+                        <p class="itemText">Item Name:${item.itemName}</p>
+                        <p class="itemText">Item Price: Rs.${item.itemPrice}</p>
+                    </div>
+                    <div class="itembtn">
+                      <button class="cartbtn" onclick="addToCart(${index},${item.itemCode},${ind},'${name}')">Add To Cart</button>
+                    </div>
+                </div>
+                `
+                itemCard.innerHTML +=itemContainer
+                // console.log(BranchData[index].name);
+
+                // ${item.itemCode},
+                
+             })
+
+
+
+
+
+
+      };
+      // itemDisplay();
+
+  
+
+      
+
+      function closeCard() {
+        document.getElementById("container").style.display = "none";
+        location.reload()
+      }
+
+
+      
+      /******************** Add Item to cart *************************/
+      // debugger
+
+      // Adding items to cart
+      function addToCart(index,itemCode, ind,nam) {
+        // debugger
+        console.log("Going to cart", ind,"and my name is", nam);
+        // console.log(name);
+
+        // console.log("im index number",index);
+        var user=localStorage.getItem("UserLogName")
+        // localStorage.setItem(`${user}ItemQty${ind}`,1)
+        // console.log(ind);
+        var BranchData=JSON.parse(localStorage.getItem("BranchDetails"))?JSON.parse(localStorage.getItem("BranchDetails")):[]
+        
+        // const branchName=BranchData[index].name
+
+        // var bname=localStorage.setItem("branch",branchName)
+        var branch=JSON.parse(localStorage.getItem(`${user}BranchCart`))?
+        JSON.parse(localStorage.getItem(`${user}BranchCart`)):[]
+        
+          // console.log( branchList[index].name,index)
+          // var abc=`${branchList[index].name}`
+          // console.log(abc);
+            // var branch=`${branchList[index].name}`
+
+
+            branch.push({
+              "bname":`${BranchData[index].name}`
+            })
+        
+
+            localStorage.setItem(`${user}BranchCart`,JSON.stringify(branch))
+            // console.log(localStorage.getItem("BranchCart"))
+
+        var cartedList = JSON.parse(localStorage.getItem(`${user}cartedItems`))
+          ? JSON.parse(localStorage.getItem(`${user}cartedItems`))
+          : [];
+          var addItems = JSON.parse(localStorage.getItem(`${BranchData[index].name}`))? 
+        JSON.parse(localStorage.getItem(`${BranchData[index].name}`)): [];
+        // console.log(addItems);
+
+        // console.log(branch[index].bname);
+
+        var addItems;
+        // console.log(addItems[ind].);
+        // cartedList.push(addItems);
+
+        // console.log(cartedList);
+
+        // debugger
+        if (
+          cartedList.some((item) => {
+            return item.itemCode == itemCode;
+          })
+        ) {
+          
+          // console.log(id);
+          alert("Item Already added!!");
+          localStorage.setItem(`${user}cartedItems`, JSON.stringify(cartedList));
+          return false;
+        }
+        //else if(branch[index].bname1=BranchData[index].name){
+        //   alert(`You have to select from dis branch${BranchData[index].name}`)
+        // }
+        else {
+          addItems = addItems.find((item) => {
+            return item.itemCode == itemCode;
+          });
+        }
+
+        // cartedList.push(addItems);
+        // console.log(BranchData[index].name);
+        if(branch[0].bname==BranchData[index].name){
+          cartedList.push(addItems);
+          localStorage.setItem(`${user}cartedItems`, JSON.stringify(cartedList));
+
+          alert("Item Added Successfully!!");
+        }else{
+          alert(`You have to select Items from ${branch[0].bname} Branch only`)
+
+        }
+        // console.log(cartedList);
+
+        // console.log(cartedList);
+
+        // localStorage.setItem(`${user}cartedItems`, JSON.stringify(cartedList));
+
+        // alert("Item Added Successfully!!");
+        location.reload(); 
+      }
+
+      //Displaying cart items
+      function displayCart() {
+
+
+        var user=localStorage.getItem("UserLogName")
+        var cardList = JSON.parse(localStorage.getItem(`${user}cartedItems`))
+          // ? JSON.parse(localStorage.getItem("cartedItems"))
+          // : [];
+
+        // console.log(cardList);
+
+        var container = document.getElementById("cartContainer");
+
+        cardList.forEach((item, index) => {
+          var user=localStorage.getItem("UserLogName")
+          // console.log(user);
+          // localStorage.setItem(`${user}${item.itemCode}Qty`,1)
+          // console.log(index);
+          // var qty=localStorage.getItem(`${user}ItemQty${index}`)
+          // console.log(localStorage.getItem(`${user}${item.itemCode}Qty`));
+
+          var qty=localStorage.getItem(`${user}${item.itemCode}Qty`)?localStorage.getItem(`${user}${item.itemCode}Qty`):1
+          var cards = `
+          <div style="margin:13px;">
+            <div class="insideCard" style="display:flex;width:100%;height:auto;border:0.5px solid gray;box-shadow: 0px 0px 2px 2px gray;border-radius: 8px;" >
+
+             <img src=${item.itemImage} width='150px' height='120px' style="border-radius: 8px"/>
+
+            <div style="margin-left:30px;padding:0px;line-height:30px">
+
+              <h3 style="font-size:30px;">${item.itemName} </h3>
+              
+              <p id=${index}>Price :<b>${item.itemPrice}</b></p>
+
+              
+              <button type="button" id=${index}  onClick={decCount(${item.itemPrice},${index},${item.itemCode})}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width:8px;height:8px;"><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg></i></button>
+              <input value=${qty} name=${index} style="width:25px; text-align:center;" readonly/>
+
+              
+              <button type="button"  onClick={incCount(${item.itemPrice},${index},${item.itemCode})}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width:8px;height:8px;"><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg></i></button>
+
+              
+              <br/>
+              <button type="button" onClick={removeToCart(${index},${item.itemCode})} >Remove</button>
+            </div>
+          </div>
+        </div>
+ 
+            `;
+
+          container.innerHTML += cards;
+
+
+        // var cardList = JSON.parse(localStorage.setItem(`${user}cartedItems`))
+
+        });
+
+      }
+      displayCart();
+
+      // empty cart functionalities
+      function cartPage() {
+        // debugger
+
+        var user=localStorage.getItem("UserLogName")
+        // console.log("Going to card page",user);
+        // display();
+
+        document.getElementById("hey").style.display = "block";
+
+
+        const cartedList = JSON.parse(localStorage.getItem(`${user}cartedItems`))
+          ? JSON.parse(localStorage.getItem(`${user}cartedItems`))
+          : [];
+
+        // console.log(cartedList);
+        
+        if(cartedList.length==0){
+          document.getElementById("buy-btn").setAttribute('disabled','disabled')
+          localStorage.removeItem(`${user}BranchCart`)
+        }
+      }
+
+      // cart popup close
+      function closeCart() {
+        document.getElementById("hey").style.display = "none";
+      }
+      // localStorage.setItem("ItemQty",1)
+
+
+      // Cart count increment
+      var incCount = (Itemcount, ind,code) => {
+        // console.log(this.TotalBill);
+        // debugger
+        // totalAmt();
+        console.log(code);
+        var user=localStorage.getItem("UserLogName");
+        // console.log(Itemcount,ind);
+        var len = document.getElementsByTagName("input").length - 1;
+        var inpVal = document.getElementsByTagName("input");
+        var myarr=new Array();
+
+        var incCountVal = 0;
+        var getVal = 0;
+
+        var qty=localStorage.getItem(`${user}${code}Qty`)?localStorage.getItem(`${user}${code}Qty`):1
+        console.log(qty);
+        for (var i = 0; i <= len; i++) {
+          if (inpVal[i].name == ind) {
+            getVal = parseInt(inpVal[i].value);
+            incCountVal = getVal + 1;
+            inpVal[i].value = incCountVal;
+
+            
+            
+            this.TotalBill = this.TotalBill + Itemcount;
+            document.getElementById("TotalBill").innerHTML =
+              "Total Amount :" + this.TotalBill;
+            localStorage.setItem(`${user}${code}Qty`,incCountVal)
+            localStorage.setItem(`${user}TotalBill`, this.TotalBill);
+          }
+        }
+      };
+      // Cart count Decrement
+      var decCount = (Itemcount1, ind,code) => {
+        var user=localStorage.getItem("UserLogName");
+        var len = document.getElementsByTagName("input").length - 1;
+        var inpVal = document.getElementsByTagName("input");
+
+        var decCountVal = 0;
+        var getVal1 = 0;
+
+        for (var i = 0; i <= len; i++) {
+          if (inpVal[i].name == ind) {
+            getVal1 = parseInt(inpVal[i].value);
+            decCountVal = getVal1 - 1;
+            inpVal[i].value = decCountVal;
+
+            if (decCountVal < 1) {
+              alert("Minmum Quantity should 1");
+              decCountVal = 1;
+              inpVal[i].value = decCountVal;
+              // document.getElementById('TotalBill').innerHTML = "Total Bill :"+this.TotalBill
+              // console.log(this.TotalBill);
+              return false;
+            } else {
+              this.TotalBill = this.TotalBill - Itemcount1;
+              document.getElementById("TotalBill").innerHTML =
+                "Total Amount :" + this.TotalBill;
+              localStorage.setItem(`${user}${code}Qty`,decCountVal)
+              localStorage.setItem(`${user}TotalBill`, this.TotalBill);
+            }
+          }
+        }
+      };
+      
+      
+      var user=localStorage.getItem("UserLogName");
+
+      // localStorage.setItem(`${user}TotalBill`, this.TotalBill);
+      /**************************Remove Item From Cart **********************************/
+      function removeToCart(index,code) {
+        var user=localStorage.getItem("UserLogName")
+        console.log(code);
+
+
+        const cartedList = JSON.parse(localStorage.getItem(`${user}cartedItems`))
+          ? JSON.parse(localStorage.getItem(`${user}cartedItems`))
+          : [];
+        // debugger
+        const filtered = cartedList.filter((p, ind) => {
+          return ind !== index;
+        });
+        localStorage.setItem(`${user}cartedItems`, JSON.stringify(filtered));
+        localStorage.removeItem(`${user}${code}Qty`)
+        alert("Item Removed From Cart!!");
+
+        location.reload();
+      }
+
+
+      /********************Buy Now Function ******************/
+
+      function itembuying(){
+        console.log("Going to buy item");
+        function toPayment()
+        {
+          
+          if(this.TotalBill >0)
+          {
+            
+                var CountLen = document.getElementsByTagName("input")
+
+                var InpName = document.getElementsByTagName("input")
+                var myarr=new Array();
+
+                for(var i=1;i<=CountLen.length-1;i++)
+                  {
+                    myarr.push({
+                      "qty":InpName[i].value
+                    })
+                    // alert(InpName[i].value);
+                  }
+                  localStorage.setItem("Qty",JSON.stringify(myarr))
+                  localStorage.setItem("TotalBill",document.getElementById("TotalBill").innerHTML)
+                  
+            document.write("<a href='./payment.html'></a>");
+            window.location.href = "./payment.html";
+            
+          }
+          else{
+            alert("Your Cart is empty.!!!")
+          }
+        }
+        // toPayment()
+
+        document.write("<a href='./payment.html'></a>");
+        window.location.href = "./payment.html";
+     
+        
+      }
+    </script>
+  </body>
+</html>

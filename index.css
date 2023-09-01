@@ -1,0 +1,599 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+button{
+  cursor: pointer;
+}
+.success {
+  background: green;
+  color: White;
+  cursor: pointer;
+}
+.danger {
+  background: red;
+  color: White;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#homePage {
+  background-image: url("./assets/1611314.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center bottom; 
+}
+.login {
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 370px;
+  height: auto;
+  text-align: center;
+  position: absolute;
+  top: 30%;
+  left: 35%;
+  border-radius: 10px;
+  box-shadow: white 0px 5px 5px 10px;
+  /* display: none; */
+}
+.loginForm {
+  padding: 40px;
+}
+.inp {
+  width: 100%;
+  padding: 5px 0px;
+  border-radius: 5px;
+  border: none;
+  text-align: center;
+}
+.logintext {
+  color: white;
+  text-align: start;
+  margin: 10px;
+}
+.passInp {
+  margin: 10px 0px;
+}
+.login-btn {
+  display: block;
+  margin-top: 15px;
+  width: 100%;
+  padding: 7px;
+  border: none;
+  border-radius: 15px;
+}
+.CreateAccountPopup {
+  position: relative;
+  margin-top: 20px;
+  /* border-bottom: 2px solid white; */
+  color: white;
+  cursor: pointer;
+  text-align: end;
+  /* width: 46%; */
+  /* height: 250px; */
+  
+ 
+}
+.CreateAccountPopup b{
+  border-bottom: 1px solid white;
+  font-weight: 100;
+
+}
+.CreateAccountPopup :hover{
+  color: blue;
+  border-bottom: 1px solid blue;
+ 
+}
+#UserRegForm {
+  color: white;
+  position: absolute;
+  top: 17%;
+  left: 35%;
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 370px;
+  height: auto;
+  /* text-align: center; */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: white 0px 5px 5px 10px;
+  display: none;
+}
+.heading {
+  margin: 10px auto;
+  text-align: center;
+}
+.i {
+  width: 100%;
+  padding: 5px;
+  border-radius: 7px;
+  border: none;
+  text-align: center;
+}
+.label {
+  text-align: start;
+  margin-left: 6px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+.err {
+  color: red;
+  visibility: hidden;
+  font-weight: bold;
+}
+.createUser {
+  padding: 5px 15px;
+  border: none;
+  border-radius: 5px;
+  width: 225px;
+  background-color: green;
+  color: white;
+}
+.q {
+  padding: 5px 15px;
+  border: none;
+  border-radius: 5px;
+  width: 100px;
+}
+.closebtn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/*******************************Admin Page Css***********************************/
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 50px;
+  /* border: 1px solid red; */
+  box-shadow: black 0px 4px 12px 2px;
+  z-index: 10;
+}
+
+.logo {
+  width: 195px;
+  height: 110px;
+}
+.logoName {
+  width: 225px;
+  height: 90px;
+  margin: 10px;
+}
+.admin-btns {
+  margin-right: 35px;
+}
+.admin-btn {
+  margin: 35px 15px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: black;
+  color: white;
+}
+
+/* Add Branch Popup CSS*/
+
+.addBranch {
+  position: fixed;
+  top: 13%;
+  left: 37%;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  width: 460px;
+  height: 400px;
+  padding: 30px 50px;
+  border-radius: 10px;
+  /* position: relative; */
+  box-shadow: yellow 0px -2px 5px 6px;
+  display: none;
+}
+.branchPopUpInp  {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 100%;
+  border-radius: 5px;
+  margin: 5px 0px;
+  text-align: center;
+  /* color: blue; */
+}
+.branchName,
+.branchCode,.editbranchName,.editbranchCodebranchAddress,.editbranchCode{
+  height: 25px;
+}
+.addItem {
+  margin: 5px 0px;
+}
+
+.addItem-btn {
+  margin-left: 260px;
+  padding: 7px 15px;
+  background: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.popUp {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.addNewBranch {
+  width: 230px;
+}
+.closebranchPopup {
+  width: 115px;
+  margin-left: 6px;
+}
+.branchAddress,.editbranchAddress {
+  height: 80px;
+  /* text-align: start; */
+}
+.addItemPopUp {
+  position: absolute;
+  top: 15%;
+  left: 37%;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  width: 400px;
+  height: 360px;
+  padding: 40px 50px;
+  border-radius: 10px;
+  /* position: relative; */
+  box-shadow: yellow 0px -2px 5px 6px;
+  display: none;
+}
+.branchCards {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  justify-content: space-evenly;
+  /* margin-top: 30px; */
+  padding-top: 30px;
+  min-height: 475px;
+  background-image: url(./assets/bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center top; 
+}
+.e {
+  width: 90px;
+  border: none;
+}
+#itemAdd {
+  width: 175px;
+}
+#closePopup {
+  margin-left: 15px;
+  width: 100px;
+}
+.btn-Item {
+  /* display: block; */
+  padding: 8px 15px;
+  border: none;
+  margin: 10px 0px;
+  border-radius: 5px;
+}
+#itemImage {
+  width: 60%;
+}
+.in {
+  width: 100%;
+  margin: 2px 0px;
+  height: 25px;
+  border-radius: 7px;
+  border: none;
+  text-align: center;
+}
+
+.cardText {
+  margin: 5px;
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+}
+.h {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.view {
+  width: 90px;
+  padding: 7px 15px;
+  border: none;
+  border-radius: 10px;
+  background: blueviolet;
+  color: white;
+}
+.cards {
+  background-color: rgba(0, 0, 0, 0.9);
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+  border-radius: 15px;
+  height: 550px;
+  overflow: auto;
+  display: none;
+}
+.closeCard {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  margin: 20px 70px;
+}
+.c {
+  padding: 8px 35px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+}
+.c1 {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 7px;
+}
+
+.item-cards {
+  /* position: relative; */
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  justify-content: space-evenly;
+  overflow: auto;
+  /* background-image: url(./assets/download.jpg);
+        background-repeat: no-repeat;
+        background-size: cover; */
+}
+button {
+  cursor: pointer;
+}
+.itemContain {
+  width: 195px;
+  height: auto;
+  margin: 15px;
+  text-align: justify;
+  background-color: rgba(0, 0, 0, 0.9);
+  /* padding: 15px; */
+
+  border-radius: 10px;
+}
+.itemContain img {
+  border-radius: 10px 10px 0px 0px;
+}
+.innerBox {
+  margin: 10px 4px;
+  font-size: 17px;
+  font-weight: bold;
+  color: white;
+  text-align: start;
+}
+.branchContainer {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  justify-content: space-evenly;
+  /* margin-top: 30px; */
+  min-height: 475px;
+  padding-top: 30px;
+  background-image: url(./assets/bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center top; 
+}
+.item-btn {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  margin: 12px 20px;
+}
+.container {
+  position: absolute;
+  top: 7%;
+  left: 5%;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 45px;
+  display: grid;
+  width: 90%;
+  height: 550px;
+  overflow: auto;
+  border-radius: 10px;
+  display: none;
+}
+#userPopUp{
+  cursor: pointer;
+}
+.itemContainer{
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  justify-content: space-evenly;
+}
+.itembtn {
+  padding: 15px;
+}
+.cartbtn {
+  background: blue;
+  color: white;
+  padding: 7px 15px;
+  border: none;
+  border-radius: 7px;
+}
+.userPopupContainer{
+  position: absolute;
+}
+#userPopUp{
+  display: flex;
+}
+
+.a{
+  padding-top: 5px;
+}
+.hey {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0px;
+
+  background-color: rgba(4, 5, 5, 1);
+
+  color: white;
+  display: none;
+}
+.contain {
+  position: absolute;
+  top: 0;
+  left: 10%;
+}
+
+.cartContainer {
+  /* width:80% ; */
+  padding: 0px 0px;
+  /* background: rgba(0, 0, 0,0.8); */
+  height: 450px;
+  overflow: auto;
+  box-shadow: 0px 0px 2px 2px gray;
+}
+.head {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  background: white;
+  color: black;
+  box-shadow: 0px 0px 2px 2px gray;
+  /* margin: 5% 5% 0% 13%; */
+  width: 100%;
+}
+.cart-btn{
+  box-shadow: 0px 0px 2px 2px gray;
+
+}
+
+
+.insideCard {
+  padding: 10px 50px;
+}
+.buy-btn {
+  padding: 7px 20px;
+  width: 650px;
+  font-size: 18px;
+}
+.cBtn {
+  padding: 7px 20px;
+  width: 250px;
+  font-size: 18px;
+}
+.admin-btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#userName {
+  font-size: 20px;
+  color: black;
+   margin-left: 8px; 
+   margin-right: 18px; 
+  /* letter-spacing: 1px; */
+  font-weight: bold;
+}
+#TotalBill{
+  font-size: 18px;
+  font-weight: bold;
+}
+.editBranch {
+  position: fixed;
+  top: 13%;
+  /* top: 0; */
+  left: 37%;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  width: 460px;
+  height: 495px;
+  padding: 30px 50px;
+  border-radius: 10px;
+  /* position: relative; */
+  box-shadow: yellow 0px -2px 5px 6px;
+  /* display: none; */
+}
+.editbranchPopUpInp {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 100%;
+  border-radius: 5px;
+  margin: 5px 0px;
+  text-align: center;
+  /* color: blue; */
+}
+.btnEdit{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+.edit{
+  width: 90px;
+  padding: 7px 15px;
+  border: none;
+  border-radius: 10px;
+  /* margin: 10px auto; */
+  background: green;
+  color: white;
+}
+.userPopupContainer{
+  position: absolute;
+  top: 155px;
+  left: 30%;
+  background: rgba(0, 0, 0, 1);
+  padding: 30px 60px;
+  color: white;
+  border-radius: 10px;
+  display: none;
+}
+.userContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.left{
+  line-height: 50px;
+  z-index: 1;
+}
+.left p{
+  font-size: 20px;
+  margin: 0px 20px;
+  
+}
+.userimg{
+  border-radius: 50%;
+  height: 200px;
+}
+.popbtn{
+  display: flex;
+  justify-content: end;
+  align-items: flex-end;
+}
+.pop{
+  margin: 20px 0px;
+  background-color: red;
+  color: white;
+  padding: 7px 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.add{
+  border: none;
+  background-color: green;
+  color: white;
+  padding: 8px 35px;
+  border-radius: 10px;
+  margin-right: 20px;
+}

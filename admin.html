@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <title>Admin Page</title>
+</head>
+<body>
+    <!-- <h1>Hey! Admin is here</h1> -->
+
+    <!-- **************Admin Navbar******************* -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo-container">
+                <img src="./assets/Kfc_logo_PNG9.png" alt="KFC"  class="logo">
+            </div>
+            <div>
+                <img src="./assets/name.png" alt="KFC" class="logoName">
+            </div>
+            <div class="admin-btns">
+                
+                <button class="admin-btn newBranch" onclick="handleBranchPopUp()">Add Branch</button>
+                <button class="admin-btn backToHome" onclick="homePage()">Logout</button>
+            </div>
+        </div>
+    </nav>
+    <!-- ***************End Admin Navbar**************** -->
+
+    <!-- ***************Card Container**************** -->
+    <div class="cards-container ">
+        <div class="branchCards" id="branchCards"></div>
+    </div>
+    <!-- ***************End Card Container**************** -->
+
+
+
+
+    <!-- ***************Add New Branch**************** -->
+    <form action="" class="addBranch" id="addBranch">
+        <h3 style="text-align: center;margin: 12px 0px;">Branch Details</h3>
+        <!-- <div class="addItem"> -->
+            <!-- <button class="addItem-btn" onclick="addItemPopup()">Add Items</button> -->
+        <!-- </div> -->
+        <div style=" margin: 15px 0px;">
+            Branch Image: <input type="file" name="branchImg" id="branchImg" style="margin-left: 7px;"/>
+            <p class="err" id="branchImgErr">Error</p>
+        </div>
+        <!-- <div>
+            <label for="">Branch Code:</label><br>
+            <input type="text" name="branchCode" class="branchCode branchPopUpInp" id="branchCode"
+            placeholder="Enter Branch Code..." >
+            <p class="branchCodeErr err" id="branchCodeErr">Error</p>
+        </div> -->
+        <div>
+            <label for="">Branch Name:</label><br>
+            <input type="text" name="branchName" class="branchName branchPopUpInp" id="branchName"
+            placeholder="Enter Branch Name..." >
+            <p class="branchNameErr err" id="branchNameErr">Error</p>
+        </div>
+        <div>
+            <label for="">Branch Address:</label><br>
+            <input type="text" name="branchAddress" class="branchAddress branchPopUpInp" id="branchAddress"
+            placeholder="Enter Branch Address..." >
+            <p class="branchAddressErr err" id="branchAddressErr">Error</p>
+        </div>
+       
+        <div>
+            <button type="submit" class="popUp addNewBranch success" id="addNewBranch" onclick="handleBranchSubmit()">Add Branch</button>
+            <button class="popUp closebranchPopup danger" id="closebranchPopup" onclick="branchPopUpClose()">Close</button>
+        </div>
+    </form>
+    
+    <!-- ***************End Add New Branch**************** -->
+
+    <!-- ***************Add Item PopUp**************** -->
+
+   <div class="cards" id="cards">
+    <div class="closeCard" id="closeCard">
+    </div>
+    <div class="item-cards" id="item-cards">
+        
+    </div>
+   </div> 
+    
+
+   <div class="additem" id="additem"></div>
+    
+
+    <!-- ***************End Add Item PopUp**************** -->
+    
+    <!-- *********************Edit Branch******************** -->
+    <div class="editBranchItem" id="editBranchItem"></div>
+    <!-- <button onclick="fun(newfun())">Click ME</button> -->
+    <!-- <input type="file" name="editImg" id="editBranchImg" class="editBranchImg"> -->
+</body>
+
+<script>
+    // function fun(){
+    //     return "hello"
+    // }
+    // function newfun() {
+    //         console.log("Hey");
+    //     }
+var BranchData= new Array();
+// var editBranch= new Array();
+this.getimg;
+
+var myfile = document
+  .querySelector("#branchImg")
+  .addEventListener("change", function () {
+    var reader = new FileReader();
+    reader.addEventListener("load", () => {
+      localStorage.setItem("recentimg", reader.result);
+    });
+
+    reader.readAsDataURL(this.files[0]);
+  });
+
+
+
+
+
+ 
+
+
+    /************* Logout Button***********************/
+    function homePage(){
+        document.write("<a href='./index.html'></a>")
+        window.location.href="./index.html";
+    }
+  
+
+
+
+
+    /************* Branch PopUp Open***********************/
+    function handleBranchPopUp(index) {
+        
+        document.getElementById('addBranch').style.display="block"
+    }
+
+
+
+
+
+
+
+
+
+
+    
+
+    /************* Additem PopUp Open***********************/
+    function addItemPopup(index){
+        console.log(index);
+        document.getElementById("addBranch").addEventListener('submit',function(e){
+            e.preventDefault()
+        })
+        
+        console.log("Handling bro",index);
+
+       
+        const itemForm=document.getElementById("additem")
+
+
+
+        // <div>
+        //     <label for="">Item Code: </label><br>
+        //     <input type="text" name="itemCode" id="itemCode" class="itemCode in" placeholder="Enter Item Code...">
+        //     <p class="itemCode-err err" id="itemCode-err">Error</p>
+
+        // </div>
+
+        const popUp=`
+        <form action="" class="addItemPopUp" id="addItemPopUp">
+        <h3 style="text-align: center;margin: 13px 0px;">Add Items</h3>
+        <div> 
+            Add Image: <input type="file" name="item-pic" id="itemImage" class="itemImage in">
+            <p class="itemImg-err err" id="itemImg-err">Error</p>
+        </div>
+        
+        <div>
+            <label for="">Item Name: </label><br>
+            <input type="text" name="itemName" id="itemName" class="itemName in" placeholder="Enter Item Name...">
+            <p class="itemName-err err" id="itemName-err">Error</p>
+        </div>
+      
+        <div>
+            <label for="">Item Price: </label><br>
+            <input type="number" name="itemPrice" id="itemPrice" class="itemPrice in" placeholder="Enter Item Price...">
+            <p class="itemPrice-err err" id="itemPrice-err">Error</p>
+        </div>
+        <div class="items-btn">
+           
+            <button type="submit" name="itemAdd" class="itemAdd success btn-Item" id="itemAdd" onclick="handleAddItemSubmit(${index})">Add Item</button>
+            <button name="closePopup" id="closePopup" class="closePopup danger btn-Item"  onclick="backtoAddBranch()">Close</button>
+        </div>
+    </form>
+        `
+
+        itemForm.innerHTML += popUp
+        document.getElementById("addItemPopUp").addEventListener('submit',function(e){
+            e.preventDefault()
+        })
+
+        document.getElementById("addItemPopUp").style.display="block"
+        // document.getElementById('addBranch').style.display="none"
+        // document.getElementById('addItemPopUp').style.display="block"
+
+        // var branch=JSON.parse(localStorage.getItem("BranchDetails"))? JSON.parse(localStorage.getItem("BranchDetails")): [];
+        // var select=document.getElementById("selectOpt")
+        
+        // branch.forEach((branch)=>{
+        //     const list=`<option>${branch.name}</option>`;
+
+        //     select.innerHTML+= list;
+        // })
+
+
+        var mynewfile = document
+        .querySelector("#itemImage")
+        .addEventListener("change", function () {
+            var newreader = new FileReader();
+            newreader.addEventListener("load", () => {
+            localStorage.setItem("Itemrecentimg", newreader.result);
+            });
+
+            newreader.readAsDataURL(this.files[0]);
+        });
+
+    }
+    
+    
+    /************* Additem PopUp Close***********************/
+    
+    function backtoAddBranch(){
+        document.getElementById("addItemPopUp").style.display="none"
+    }
+    
+
+    function editPopUpClose(){
+        document.getElementById("editBranch").style.display="none"
+        location.reload()
+    }
+
+    /************* Branch PopUp Close***********************/
+    function branchPopUpClose() {
+        document.getElementById("addBranch").addEventListener('submit',function(e){
+            e.preventDefault()
+        })
+        console.log("Handling close");
+        document.getElementById('addBranch').style.display="none"
+
+    }
+
+    function closeCard(){
+        document.getElementById("cards").style.display="none"
+        location.reload()
+    }
+
+
+
+
+    /**************************************Displaying Branch******************///////
+    const displayCards=()=>{
+        const branchList = JSON.parse(localStorage.getItem("BranchDetails"))? JSON.parse(localStorage.getItem("BranchDetails")): [];
+        // console.log(branchList);
+        var cardContainer = document.getElementById("branchCards");
+        // console.log(btn);
+        branchList.forEach((branch,index) => {
+            // <img src=${order.image} width='190px' height='150px' style="border-radius: 8px 8px 0px 0px"/>
+        //   console.log(order);
+          const cardContent = `
+
+          <div style="width:240px;height:auto;border:0.5px red white;margin-bottom:25px;box-shadow: 0px 0px 2px 2px black;border-radius: 8px;background-color:rgb(0,0,0,0.8)" >
+          
+          <img src=${branch.image} width='100%' height='180px' style="border-radius: 8px 8px 0px 0px"/>
+
+                <div style="margin:15px 0px;pading:0px;">
+                  <p class="cardText">Branch ID :${branch.code}</p>
+                  
+                  <h5 style="margin:5px;pading:0px;font-size: 18px;color: white;font-weight:bold"> Branch : ${branch.name} </h5>
+                  <p style="margin:5px;font-size: 18px ;color: white;" >Location : ${branch.address} </p>
+                  <div class="h">
+                    <button class="view" onclick="viewPage(${index})">View</button> 
+                  </div>  
+                  <div class="btnEdit">
+                    <button class="edit" onclick="editbranch(${index})">Edit</button> 
+                  </div>  
+                  <div style="margin:10px auto"> 
+                     <br>
+                  <button type="button"class="danger e" onClick={deleteOrder(${index})} style="position:relative;left:75px;margin:0px 0px;padding:7px 15px;border-radius:10px;">Delete</button>
+                  </div>
+              </div>
+            
+          </div>`;
+
+          cardContainer.innerHTML +=cardContent
+          
+        });
+
+
+      }
+      displayCards();
+
+
+    function viewPage(index){
+        // console.log("viewing",index);
+        
+
+        document.getElementById("cards").style.display="block"
+
+
+        var button=document.getElementById("closeCard")
+            const btn=`
+             <button class="add"  onclick="addItemPopup(${index})">Add item</button>
+             <button class="danger c" onclick="closeCard()">Close</button>
+             `   
+
+            button.innerHTML=btn
+            itemDisplay(index)
+        
+    }  
+     
+   
+   
+
+      const deleteOrder=(index)=>{
+
+        const branchList = JSON.parse(localStorage.getItem("BranchDetails"))? JSON.parse(localStorage.getItem("BranchDetails")): [];
+        
+
+
+        const filtered=branchList.filter((p,ind)=>{
+           
+        return ind !== index
+
+        })
+
+        localStorage.setItem('BranchDetails',JSON.stringify(filtered))
+        localStorage.removeItem(`${branchList[index].name}`)
+
+        alert('Branch Removed')
+
+        
+        location.reload()
+
+  
+}
+
+
+
+    /************** Branch push Data *************************/
+
+    function handleBranchSubmit(){
+
+
+        
+        document.getElementById("addBranch").addEventListener('submit',function(e){
+            e.preventDefault()
+        })
+        console.log("handling Submit Branch");
+
+
+         //*********Pushing Data to Local storage***********
+
+        var branchImg=document.getElementById("branchImg")
+        var branchCode=document.getElementById("branchCode")
+        var branchName=document.getElementById("branchName")
+        var branchAddress=document.getElementById("branchAddress")
+
+
+
+        //*********** Error Message*************
+
+        var branchImgErr=document.getElementById("branchImgErr")
+        var branchCodeErr=document.getElementById("branchCodeErr")
+        var branchNameErr=document.getElementById("branchNameErr")
+        var branchAddressErr=document.getElementById("branchAddressErr")
+
+        // alert(branchAddress.value)
+        
+        var code=200;
+        BranchData=JSON.parse(localStorage.getItem("BranchDetails"))?JSON.parse(localStorage.getItem("BranchDetails")):[]
+        // console.log(BranchData.length+Math.random())
+        if (branchImg.value=='') {
+            branchImg.style.color="red"
+            branchImgErr.style.visibility="visible"
+            branchImgErr.innerHTML="Please Insert Image"
+        }
+        // else if(branchCode.value=='')
+        // {
+        //     branchImg.style.color="white"
+        //     branchImgErr.style.visibility="hidden"
+        //     branchCode.style.border="1px solid red"
+        //     branchCodeErr.style.visibility="visible"
+        //     branchCodeErr.innerHTML="Please Enter Branch Code"
+        // }
+        else if (branchName.value=='')
+        {
+            branchCode.style.border="1px solid black"
+            branchCodeErr.style.visibility="hidden"
+            branchName.style.border="1px solid red"
+            branchNameErr.style.visibility="visible"
+            branchNameErr.innerHTML="Please Enter Branch Name"
+        }  else if (branchAddress.value=='')
+        {
+            branchCode.style.border="1px solid black"
+            branchCodeErr.style.visibility="hidden"
+            branchName.style.border="1px solid black"
+            branchNameErr.style.visibility="hidden"
+            branchAddress.style.border="1px solid red"
+            branchAddressErr.style.visibility="visible"
+            branchAddressErr.innerHTML="Please Enter Branch Address"
+        }
+        // else if(BranchData.some((val)=>{return val.code===branchCode.value})){
+        //     branchCode.style.border="1px solid red"
+        //     branchCodeErr.style.visibility="visible"
+        //     branchCodeErr.innerHTML="Branch Code is Already Exist"
+        //     branchName.style.border="1px solid black"
+        //     branchNameErr.style.visibility="hidden"
+        //     branchAddress.style.border="1px solid black"
+        //     branchAddressErr.style.visibility="hidden"
+
+        //     alert("Branch Code is Already Exist")
+        // }
+
+        else if(branchName.value!='' && branchAddress.value!=''){
+          BranchData.push({
+                    "image":localStorage.getItem("recentimg"),
+                    "code":Math.floor(Math.random()*(300-200+1)+200),
+                    "name":branchName.value,
+                    "address":branchAddress.value,
+                })  
+                localStorage.setItem("BranchDetails",JSON.stringify(BranchData))
+                // document.getElementById("addBranch").style.display="none"
+                document.getElementById("addBranch").submit()
+
+                }else{
+                    alert("Please Enter some data");
+                }
+        // console.log(BranchData);
+      
+
+    }
+ 
+    /****************************Edit Branch Button***************/
+    
+ function editbranch(index){
+    // debugger
+    const branchList = JSON.parse(localStorage.getItem("BranchDetails"))? JSON.parse(localStorage.getItem("BranchDetails")): [];
+    
+    var branch=document.getElementById("editBranchItem")
+    // console.log(branch);
+    const editedBranch=`
+    <div action="" class="editBranch" id="editBranch">
+        <h3 style="text-align: center;margin: 12px 0px;">Branch Details</h3>
+        
+        <div style=" margin: 15px 0px;">
+            Branch Image: <input type="file" name="editImg" id="editBranchImg" class="editBranchImg">
+            <p class="err" id="editbranchImgErr">Error</p>
+        </div>
+        <div>
+            <label for="">Branch Code:</label><br>
+            <input type="text" name="branchCode" class="editbranchCode editbranchPopUpInp" id="editbranchCode"
+            placeholder="Enter Branch Code..."  value=${branchList[index].code} readonly/>
+            <p class="editbranchCodeErr err" id="editbranchCodeErr">Error</p>
+        </div>
+        <div>
+            <label for="">Branch Name:</label><br>
+            <input type="text" name="editbranchName" class="editbranchName editbranchPopUpInp" id="editbranchName"
+            placeholder="Enter Branch Name..." value=${branchList[index].name} readonly/>
+            <p class="editbranchNameErr err" id="editbranchNameErr">Error</p>
+        </div>
+        <div>        
+            <label for="">Branch Address:</label><br>
+            <input type="text" name="editbranchAddress" class="editbranchAddress editbranchPopUpInp" id="editbranchAddress"
+            placeholder="Enter Branch Address...">
+            <p class="editbranchAddressErr err" id="editbranchAddressErr">Error</p>
+        </div>
+       
+        <div id="editbtn">
+            <button type="submit" class="popUp editNewBranch success" id="editNewBranch" onclick="edit(${index})">Edit</button>
+            <button class="popUp closebranchPopup danger" id="closebranchPopup" onclick="editPopUpClose()">Close</button>
+        </div>
+    </div>
+    `  
+     branch.innerHTML +=editedBranch  
+  
+ /**************** Image Edit page******************/
+
+    // console.log(branch);
+    var myeditfile = document
+  .querySelector("#editBranchImg")
+  .addEventListener("change", function () {
+    var editreader = new FileReader();
+    editreader.addEventListener("load", () => {
+      localStorage.setItem("editimg", editreader.result);
+    });
+
+    editreader.readAsDataURL(this.files[0]);
+  });
+     
+ }
+
+
+ function test(){
+        const edit={
+
+    }
+        edit.image=localStorage.getItem("editimg")
+        edit.code=document.getElementById("editbranchCode").value
+        edit.name=document.getElementById("editbranchName").value
+        edit.address=document.getElementById("editbranchAddress").value
+        
+
+        /**************Set the Edit local stroage***************/
+        localStorage.setItem("editItem",JSON.stringify(edit))
+
+        // location.reload()
+
+ }
+ 
+ 
+ function edit(index){
+    test()
+    const branchList = JSON.parse(localStorage.getItem("BranchDetails"))? JSON.parse(localStorage.getItem("BranchDetails")): [];
+    
+    const editItem = JSON.parse(localStorage.getItem("editItem"))?JSON.parse(localStorage.getItem("editItem")):[]
+
+    // console.log(editItem);
+    // debugger
+    // editbranchCode,editBranchImg,editbranchName,editbranchAddress
+    var bImage=document.getElementById("editBranchImg")
+    var bCode=document.getElementById("editbranchCode")
+    var bName=document.getElementById("editbranchName")
+    var bAddress=document.getElementById("editbranchAddress")
+
+    // err message:-editbranchImgErr,editbranchCodeErr,editbranchNameErr,editbranchAddressErr
+    var bImageerr=document.getElementById("editbranchImgErr")
+    var bCodeerr=document.getElementById("editbranchCodeErr")
+    var bNameerr=document.getElementById("editbranchNameErr")
+    var bAddresserr=document.getElementById("editbranchAddressErr")
+
+
+        if (bImage.value=='') {
+            // console.log("null img");
+            bImage.style.color="red"
+            bImageerr.style.visibility="visible"
+            bImageerr.innerHTML="Please select an Image"
+        }else if(bAddress.value==''){
+            bImage.style.color="white"
+            bImageerr.style.visibility="hidden"
+            bAddress.style.border="1px solid red"
+            bAddresserr.style.visibility="visible"
+            bAddresserr.innerHTML="Please Enter Address"
+        }
+        
+        
+        else{
+            
+            if (branchList[index].code==editItem.code) {
+            branchList[index]=editItem
+            }
+            location.reload()
+        }
+    // console.log(branchList);
+
+    // localStorage.setItem("BranchDetails",JSON.stringify(branchList))
+    localStorage.setItem("BranchDetails",JSON.stringify(branchList))
+    
+ }
+
+
+
+  
+
+    /************** Item push Data *************************/
+    function handleAddItemSubmit(index){
+
+        
+        // debugger;
+        const branchList = JSON.parse(localStorage.getItem("BranchDetails"))? JSON.parse(localStorage.getItem("BranchDetails")): [];
+        
+       
+       
+        document.getElementById("addBranch").addEventListener('submit',function(e){
+            e.preventDefault()
+        })
+        document.getElementById("addItemPopUp").addEventListener('submit',function(e){
+            e.preventDefault()
+        })
+
+        
+
+        console.log("Item Adding",index);
+        
+        var itemImage=document.getElementById('itemImage')
+        var itemCode=document.getElementById('itemCode')
+        var itemName=document.getElementById('itemName')
+        var itemPrice=document.getElementById('itemPrice')
+
+        
+        // itemImg-err,itemCode-err,itemName-err,itemPrice-err
+
+
+        var itemImgerr=document.getElementById('itemImg-err')
+        var itemCodeerr=document.getElementById('itemCode-err')
+        var itemNameerr=document.getElementById('itemName-err')
+        var itemPriceerr=document.getElementById('itemPrice-err')
+        var select=document.getElementById("selectOpt")
+        var selecterr=document.getElementById('select-err')
+        // localStorage.setItem("ShowDuplicateItemID",itemCode.value)
+
+        // alert(itemPrice.value)
+        var ItemData= new Array();
+     
+        ItemData=JSON.parse(localStorage.getItem(`${branchList[index].name}`))?JSON.parse(localStorage.getItem(`${branchList[index].name}`)):[]
+        
+
+
+        // debugger
+        if (itemImage.value=='') {
+            itemImage.style.color="red"
+            itemImgerr.style.visibility="visible"
+            itemImgerr.innerHTML="Please Insert Image"
+        }
+        // else if(itemCode.value=='')
+        // {
+        //     itemImage.style.color="white"
+        //     itemImgerr.style.visibility="hidden"
+        //     itemCode.style.border="1px solid red"
+        //     itemCodeerr.style.visibility="visible"
+        //     itemCodeerr.innerHTML="Please Enter Branch Code"
+        // }
+        else if (itemName.value=='')
+        {
+            itemImage.style.color="white"
+            itemImgerr.style.visibility="hidden"
+            itemCode.style.border="1px solid black"
+            itemCodeerr.style.visibility="hidden"
+            itemName.style.border="1px solid red"
+            itemNameerr.style.visibility="visible"
+            itemNameerr.innerHTML="Please Enter Item Name"
+        } 
+        else if (itemPrice.value=='')
+        {
+            itemImage.style.color="white"
+            itemImgerr.style.visibility="hidden"
+            itemCode.style.border="1px solid black"
+            itemCodeerr.style.visibility="hidden"
+            itemName.style.border="1px solid black"
+            itemNameerr.style.visibility="hidden"
+            itemPrice.style.border="1px solid red"
+            itemPriceerr.style.visibility="visible"
+            itemPriceerr.innerHTML="Please Enter Branch Address"
+        }
+        // else if(ItemData.some((data)=>data.itemCode===itemCode.value)){
+        //     itemImage.style.color="white"
+        //     itemImgerr.style.visibility="hidden"
+        //     itemCode.style.border="1px solid red"
+        //     itemCodeerr.style.visibility="visible"
+        //     itemCodeerr.innerHTML="Item Code Already Exist"
+        //     itemName.style.border="1px solid black"
+        //     itemNameerr.style.visibility="hidden"
+        //     itemPrice.style.border="1px solid black"
+        //     itemPriceerr.style.visibility="hidden"
+
+
+        //     alert("Item Code is already exists")
+        // }
+        else if(itemImage.value!=''  && itemName.value!='' && itemPrice.value!=''){
+            ItemData.push({
+            "itemImage":localStorage.getItem('Itemrecentimg'),
+            "itemCode":Math.floor(Math.random()*(300-200+1)+100),
+            "itemName":itemName.value,
+            "itemPrice":itemPrice.value,
+        })  
+            console.log(ItemData);
+           
+            localStorage.setItem(`${branchList[index].name}`,JSON.stringify(ItemData))
+            document.getElementById("addItemPopUp").submit()
+            
+        }   
+       
+    }
+    
+        
+        
+
+
+    const itemDisplay=(index)=>{
+        console.log(index);
+        BranchData=JSON.parse(localStorage.getItem("BranchDetails"))?JSON.parse(localStorage.getItem("BranchDetails")):[]
+
+        // console.log(BranchData.name);
+        const itemList = JSON.parse(localStorage.getItem(`${BranchData[index].name}`))? JSON.parse(localStorage.getItem(`${BranchData[index].name}`)): [];
+            // console.log(itemList.length);
+
+            var itemCard= document.getElementById("item-cards")
+            
+
+             itemList.forEach((item,ind)=>{
+             
+             const itemContainer=
+                `
+                <div class="itemContain">
+
+                    <img src=${item.itemImage} width="100%" height="150px"/>
+                    <div class="innerBox">
+                        <p class="itemText">Item Code:${item.itemCode}</p>
+                        <p class="itemText">Item Name:${item.itemName}</p>
+                        <p class="itemText">Item Price: Rs.${item.itemPrice}</p>
+                    </div>
+                    <div class="item-btn">
+                        <button class="danger c1" onclick="deleteItem(${index},${ind})">Delete</button>
+                    </div>
+                </div>
+                `
+                itemCard.innerHTML +=itemContainer
+                
+                
+            })
+
+            
+
+    }
+  
+
+    // itemDisplay()
+   
+
+    const deleteItem=(index,ind)=>{
+        var branchList=JSON.parse(localStorage.getItem("BranchDetails"))?JSON.parse(localStorage.getItem("BranchDetails")):[]
+
+        console.log(index,ind);
+        const itemList = JSON.parse(localStorage.getItem(`${branchList[index].name}`))? JSON.parse(localStorage.getItem(`${branchList[index].name}`)): [];
+
+        console.log(branchList[index].name);
+        console.log(itemList);
+        // debugger
+        const filtered=itemList.filter((p,i)=>{
+
+        return i !=ind
+
+        })
+        // console.log(filtered);
+
+        localStorage.setItem(`${branchList[index].name}`,JSON.stringify(filtered))
+        // console.log(itemList);
+        alert('Item Removed')
+
+            
+        location.reload()
+        
+
+}
+
+
+    
+
+</script>
+</html>

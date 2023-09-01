@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js" integrity="sha512-VKjwFVu/mmKGk0Z0BxgDzmn10e590qk3ou/jkmRugAkSTMSIRkd4nEnk+n7r5WBbJquusQEQjBidrBD3IQQISQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <link rel="icon" href="./shop.jpg">
+
+<style>
+    *{
+  font-family: 'Poppins', sans-serif;
+  margin:0; padding:0;
+  box-sizing: border-box;
+  outline: none; border:none;
+  text-transform: capitalize;
+  transition: all .2s linear;
+}
+body{
+    background-color: #86c286;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding:25px;
+  min-height: 100vh;
+  /* background: linear-gradient(90deg, #2ecc71 60%, #27ae60 40.1%); */
+}
+
+.container form{
+  padding:20px;
+  width:700px;
+  background: black;
+  color: #fff;
+  box-shadow: white 0px 5px 5px 10px;
+
+}
+
+.container form .row{
+  display: flex;
+  flex-wrap: wrap;
+  gap:15px;
+}
+
+.container form .row .col{
+  flex:1 1 250px;
+}
+
+.container form .row .col .title{
+  font-size: 20px;
+  color:#fff;
+  padding-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.container form .row .col .inputBox{
+  margin:15px 0;
+}
+
+.container form .row .col .inputBox span{
+  margin-bottom: 10px;
+  display: block;
+}
+
+.container form .row .col .inputBox input{
+  width: 100%;
+  border:1px solid #ccc;
+  padding:10px 15px;
+  font-size: 15px;
+  text-transform: none;
+}
+
+.container form .row .col .inputBox input:focus{
+  border:1px solid #000;
+}
+
+.container form .row .col .flex{
+  display: flex;
+  gap:15px;
+}
+
+.container form .row .col .flex .inputBox{
+  margin-top: 5px;
+}
+
+.container form .row .col .inputBox img{
+  height: 34px;
+  margin-top: 5px;
+  filter: drop-shadow(0 0 1px #000);
+}
+
+.container form .submit-btn{
+  width: 100%;
+  padding:12px;
+  font-size: 17px;
+  /* background: #27ae60; */
+  color:#fff;
+  margin-top: 5px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.submit-btn{
+    background-color: rgb(35, 166, 236);
+}
+
+
+/* .container form .submit-btn:hover{
+  background: #2ecc71;
+} */
+</style>
+</head>
+<body>
+<!-- <button id="btnn">click</button> -->
+<div class="container" id="testdiv">
+
+    <form action="">
+
+        <div class="row">
+
+            <div class="col">
+
+                <h3 class="title">Cash On Delivery</h3>
+
+                <div class="inputBox">
+                    <span>full name :</span>
+                    <input type="text" placeholder="Enter Your name"  id="fname" />
+                </div>
+                <div class="inputBox">
+                    <span>email :</span>
+                    <input type="email" placeholder="abc@gmail.com"  id="email" />
+                </div>
+                <div class="inputBox">
+                    <span>address :</span>
+                    <input type="text" placeholder="Enter your Address"  id="address">
+                    <div id="UserAddress" style="margin: 3px 0px 7px 8px; color: red;visibility: hidden;font:2px;opacity: 0.7;">Enter Product Brand</div>
+
+                </div>
+                <div class="inputBox">
+                    <span>Phone No :</span>
+                    <input type="number" placeholder="enter Your number"  id="phnno" />
+                </div>
+
+                <div class="flex">
+                    <div class="inputBox">
+                        <span>state :</span>
+                        <input type="text" id="userstate" placeholder="karnataka" >
+                        <div id="UserState" style="margin: 3px 0px 7px 8px; color: red;visibility: hidden;font:2px;opacity: 0.7;">Enter Product Brand</div>
+
+                    </div>
+                    <div class="inputBox">
+                            <span>pin code :</span>
+                            <input type="number" id="userzipcode" placeholder="562160" >
+                            <div id="UserZipcode" style="margin: 3px 0px 7px 8px; color: red;visibility: hidden;font:2px;opacity: 0.7;">Enter Product Brand</div>
+
+
+                            <button  value="proceed to checkout" type="button"
+                            onclick="proceed()" class="submit-btn" id="submit-btn">Confirm </button>
+                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+      
+  
+
+
+
+
+
+
+<script>
+
+document.getElementById('fname').value = localStorage.getItem("UserLogName")
+document.getElementById('email').value = localStorage.getItem("UserLogEmail")
+document.getElementById("phnno").value = localStorage.getItem("UserLogPhone")
+
+  function proceed(){
+  
+    var address=document.getElementById("address")
+    var state=document.getElementById("userstate")
+    var zipcode=document.getElementById("userzipcode")
+
+
+    var addressErr=document.getElementById("UserAddress")
+    var stateErr=document.getElementById("UserState")
+    var zipcodeErr=document.getElementById("UserZipcode")
+
+
+    if(address.value==''){
+        address.style.border="2px solid red"
+        addressErr.style.visibility="visible"
+        addressErr.innerHTML="Enter Your Address"
+    }else if(state.value==""){
+        address.style.border="2px solid black"
+        addressErr.style.visibility="hidden"
+        state.style.border="2px solid red"
+        stateErr.style.visibility="visible"
+        stateErr.innerHTML="Enter State Name"
+    }else if(zipcode.value==''){
+        address.style.border="2px solid black"
+        addressErr.style.visibility="hidden"
+        state.style.border="2px solid black"
+        stateErr.style.visibility="hidden"
+        zipcode.style.border="2px solid red"
+        zipcodeErr.style.visibility="visible"
+        zipcodeErr.innerHTML="Enter Pin code"
+
+    }else if(zipcode.value.length>6 || zipcode.value.length<6){
+        address.style.border="2px solid black"
+        addressErr.style.visibility="hidden"
+        state.style.border="2px solid black"
+        stateErr.style.visibility="hidden"
+        zipcode.style.border="2px solid red"
+        zipcodeErr.style.visibility="visible"
+        zipcodeErr.innerHTML="Pin code must be 6 digits"
+    }else{
+    alert("Ordered Booked Successfully!!!")
+       
+    }
+    // alert("Ordered Booked Successfully!!!")
+
+    document.writeln("<a href='./user.html'></a>")
+    window.location.href='./user.html'
+    var user=localStorage.getItem("UserLogName")
+    console.log(user);
+    
+    const cartedList = JSON.parse(localStorage.getItem(`${user}cartedItems`))
+          ? JSON.parse(localStorage.getItem(`${user}cartedItems`))
+          : [];
+        // localStorage.removeItem(`${user}${code}Qty`)
+            // localStorage.removeItem(`${user}cartedItems`)
+            cartedList.forEach((item)=>{
+                console.log(item.itemCode);
+                localStorage.removeItem(`${user}${item.itemCode}Qty`)
+                localStorage.removeItem(`${user}cartedItems`)
+            })
+}
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Page</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        .btn{
+            display: flex;
+            justify-content: space-between;
+            
+        }
+        .btn button{
+            
+            cursor: pointer;
+        }
+        .date{
+            margin: 30px 50px;
+        }
+        .data{
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 160px;
+        }
+        .user{
+            display: flex;
+            justify-content: space-evenly;
+            
+        }
+        table{
+            border: 2px solid black;
+            width: 100%;
+        }
+        td{
+            text-align: center;
+        }
+        .container{
+            padding: 2% 8%;
+        }
+        .download{
+            padding: 7px 15px;
+            border: none;
+            background: #000;
+            color: white;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Invoice Bill</h1>
+    <div class="container">
+        <div class="btn">
+            <div>
+                <!-- ./user.html -->
+                <a href="./user.html"  id="shopping">Continue Shopping!</a>
+            </div>
+            <div>
+                <button class="download" onclick="generatePDF()">Download Invoice</button>
+            </div>
+        </div>
+        <form action="" id="invoice">
+            
+            <!-- <div class="billing">
+                <div id="name">
+                    Name: 
+                </div>
+                <div id="email">
+                    E-mail: 
+                </div>
+                <div id="contact">
+                    Phone Number: 
+                </div>
+                div
+            </div> -->
+            <div class="data">
+                <div class="invoice">
+                    <h1>Your Invoice</h1>
+                </div>
+                <div class="date">
+                    <p id="newDate"></p>
+                    <p id="newTime"></p>
+                </div>
+            </div>
+            <div>
+                <hr>
+                <div class="user">
+                    <div><b id="name">Name : </b></div>
+                    <div><b id="number">Contact No : </b></div>
+                </div>
+                <hr>
+            </div>
+            <div style="display: flex; padding: 20px;">
+                <table border="2px" id="invoiceTable">
+                    <tr><th>Item</th>
+                    <th>Item Price</th>
+                   </tr>
+                </table>
+
+                
+
+                <table id="invoiceTable2" border="2px">
+                    <tr><th>Quantity</th></tr>
+                </table>
+                <table id="invoiceTable3" border="2px">
+                    <tr><th>Total Price</th></tr>
+                </table>
+        </div>
+        <div class="totalAmt" id="totalAmt"></div>
+        <div style="margin: 30px auto; text-align: center; font-size: 22px;">
+            <b>**********************Thank You!!************************</b>
+        </div>
+        </form>
+    </div>
+
+
+
+    <script>
+        document.getElementById("shopping").addEventListener('click',()=>{
+
+            var user=localStorage.getItem("UserLogName")
+            console.log(user);
+            const cartedList = JSON.parse(localStorage.getItem(`${user}cartedItems`))
+          ? JSON.parse(localStorage.getItem(`${user}cartedItems`))
+          : [];
+        // localStorage.removeItem(`${user}${code}Qty`)
+            localStorage.removeItem(`${user}cartedItems`)
+            cartedList.forEach((item)=>{
+                console.log(item.itemCode);
+                localStorage.removeItem(`${user}${item.itemCode}Qty`)
+            })
+        })
+            
+        function Dategenerate(){
+            var newDate=document.getElementById("newDate")
+            var currentDate= new Date()
+            newDate.innerHTML+=currentDate.getDate()+"/"+parseInt(currentDate.getMonth()+1)+"/"+currentDate.getFullYear() 
+        }
+        Dategenerate();
+
+        function Timegenerate(){
+            var newDate=document.getElementById("newTime")
+            var currentDate= new Date()
+            newDate.innerHTML+=new Date().toLocaleTimeString();
+        }
+        Timegenerate()
+        document.getElementById("name").innerHTML+=localStorage.getItem("fname").toUpperCase()
+        document.getElementById("number").innerHTML+=localStorage.getItem("phnno")
+
+
+        const displayCart = () => {
+        var user=localStorage.getItem("UserLogName")
+        // console.log(user);
+        const productList = JSON.parse(localStorage.getItem(`${user}cartedItems`))? JSON.parse(localStorage.getItem(`${user}cartedItems`)): [];
+        // console.log(productList);
+        // var ItemQty = JSON.parse(localStorage.getItem("ProdQty"))
+            // console.log("i am qty",ItemQty);
+        const total=localStorage.getItem(`${user}TotalBill`)
+        // debugger
+        productList.forEach((item,index) => {
+            // localStorage.setItem(`${user}${index}Qty`,1)
+            
+
+            const cardContent = `
+            
+                <tr><td>${item.itemName}</td>
+               
+               <td>${item.itemPrice}</td>
+               </tr>     
+            
+            `;
+
+            invoiceTable.innerHTML += cardContent;
+            var Qty
+                 
+                    var qty=localStorage.getItem(`${user}${item.itemCode}Qty`)?localStorage.getItem(`${user}${item.itemCode}Qty`):1
+
+                    Qty = `<tr><td>${qty}</td></tr>`
+                    invoiceTable2.innerHTML += Qty
+                 
+
+                
+                var PriceContents
+                
+                
+                    var qty=localStorage.getItem(`${user}${item.itemCode}Qty`)?localStorage.getItem(`${user}${item.itemCode}Qty`):1
+
+                    // console.log(qty);
+                    console.log(productList[index].itemPrice);
+                    // PriceContents = `<tr><td>${((parseInt(qty[i]))*(parseInt(productList[i].itemPrice)))}</td></tr>`
+                    // invoiceTable3.innerHTML += PriceContents
+                    PriceContents=`<tr><td>${qty*productList[index].itemPrice}</td></tr>`
+                    invoiceTable3.innerHTML += PriceContents
+
+                // }   
+
+    });
+        // PriceContents = `<tr><td>${total}</td></tr>`
+        // invoiceTable3.innerHTML += PriceContents
+            
+    }
+    displayCart()
+
+    let total=()=>{
+        var user=localStorage.getItem("UserLogName")
+
+        const total=localStorage.getItem(`${user}TotalBill`)
+
+    //    console.log( document.getElementById("totalAmt"));
+        var tot=document.getElementById("totalAmt");
+        var amt=`
+        <h3 style="text-align:center;">Total Amount :${total}
+        </h3>    
+        `
+
+        tot.innerHTML +=amt
+
+    }
+    total()
+
+    function generatePDF()
+    {
+        var ele = document.getElementById('invoice')
+        html2pdf().from(ele)
+        .save('invoice.pdf');
+    } 
+    </script>
+</body>
+</html>

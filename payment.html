@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Method</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            /* background: blue; */
+        }
+        body{
+            background: #000;
+            /* color: white; */
+        }
+        .payMethod h1{
+            text-align: center;
+            margin: 35px 0px;
+            color: white;
+        }
+        .btn{
+            margin: 40px;
+            padding: 25px;
+            border: 1px solid black;
+            border-radius: 9px;
+            position: relative;
+            font-size: 20px;
+            background: white;
+            box-shadow: 0px 3px 5px 1px white;
+
+        }
+       
+        .arr{
+            position: absolute;
+            top: 19%;
+            right: 2%;
+            font-size: 35px;
+            background: white;
+        }
+        .btn:hover{
+            background: blue;
+            color: white;
+            cursor: pointer;
+        }
+        .btn:hover .arr{
+            background: blue;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- <h1>Payment Method Page!</h1> -->
+
+    <div class="payMethod">
+        <h1>Payment Method</h1>
+        <div>
+            <div class="btn" style="margin-bottom: 1px;" id="onlinePay"><b>Credit/Debit Card</b>
+            <p class="arr"><b>></b></p></div>
+            <div class="btn" style="margin-top: 4px;" id="cod"><b>Cash On Delivery</b>
+                <p class="arr"><b>></b></p></div>
+        </div>
+    </div>
+    <script>
+        document.getElementById("onlinePay").addEventListener('click',()=>{
+            console.log("Going for credit/debit card payment");
+            document.write("<a href='./online.html'></a>")
+            window.location.href="./online.html"
+        })
+        document.getElementById("cod").addEventListener('click',()=>{
+            console.log("Cash On Delivery");
+            document.write("<a href='./cod.html'></a>")
+            window.location.href="./cod.html"
+        })
+    </script>
+</body>
+</html>
